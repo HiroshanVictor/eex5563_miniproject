@@ -1,3 +1,14 @@
+/**
+ * Program to demonstrate the Next Fit memory allocation scheme.
+ *
+ * Author: H.D.H.M.J. Victor
+ * Register No: 421420945 (Remainder after dividing reg.no by 6 = 1)
+ * Description:
+ * This program allocates processes to memory blocks using the Next Fit scheme.
+ * It takes input for the number of memory blocks and processes, their sizes and allocates memory blocks in a circular fashion starting from the last allocated block.
+ * The program provides an option to restart and handles errors if the input exceeds predefined limits.
+ */
+
 #include <stdio.h>
 #define max_size 25
 
@@ -7,6 +18,7 @@ void main() {
     do {
         int nb, np, b[max_size], p[max_size], i, j, last_allocated_block = 0;
 
+        printf("\n\tRegister No: 421420945\n");
         printf("\n\tMemory Management Scheme - Next Fit\n");
 
         // Get number of blocks with validation

@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 #define max 25
 
 void main() {
@@ -11,23 +11,41 @@ void main() {
         int last_allocated_block = 0; // Track last allocated block for Next Fit
 
         printf("\n\tMemory Management Scheme - Next Fit");
-        printf("\nEnter the number of blocks:");
-        scanf("%d", &nb);
-        printf("Enter the number of Processes:");
-        scanf("%d", &nf);
+
+        // Get number of blocks with validation
+        do {
+            printf("\nEnter the number of blocks (max 25): ");
+            scanf("%d", &nb);
+            if (nb > max) {
+                printf("Error: Number of blocks cannot exceed %d. Please try again.\n", max);
+            }
+        } while (nb > max);
+
+        // Get number of processes with validation
+        do {
+            printf("Enter the number of Processes (max 25): ");
+            scanf("%d", &nf);
+            if (nf > max) {
+                printf("Error: Number of processes cannot exceed %d. Please try again.\n", max);
+            }
+        } while (nf > max);
+
         printf("\nEnter the size of the blocks:-\n");
 
+        // Get block sizes
         for (i = 1; i <= nb; i++) {
-            printf("Block %d:", i);
+            printf("Block %d: ", i);
             scanf("%d", &b[i]);
             ff[i] = i;
         }
         printf("Enter the size of the Processes :-\n");
 
+        // Get process sizes
         for (i = 1; i <= nf; i++) {
-            printf("Process %d:", i);
+            printf("Process %d: ", i);
             scanf("%d", &f[i]);
         }
+
         printf("\n\nProcess_No\tProcess_Size\tBlock_No\tBlock_Size\tFragment\n");
 
         // Fixed allocation logic

@@ -5,12 +5,9 @@ void main() {
     char choice; // Variable to store user input for restarting the program
 
     do {
-        int nb, np, b[max_size], p[max_size], frag[max_size], i, j;
-        static int b_no[max_size];
-        int flag, flagn[max_size], fragi = 0, fragx = 0;
-        int last_allocated_block = 0; // Track last allocated block for Next Fit
+        int nb, np, b[max_size], p[max_size], i, j, last_allocated_block = 0;
 
-        printf("\n\tMemory Management Scheme - Next Fit");
+        printf("\n\tMemory Management Scheme - Next Fit\n");
 
         // Get number of blocks with validation
         do {
@@ -32,69 +29,51 @@ void main() {
 
         // Get block sizes
         printf("\nEnter the size of the blocks(KB):-\n");
-
-        for (i = 1; i <= nb; i++) {
-            printf("Block %d: ", i);
+        for (i = 0; i < nb; i++) {
+            printf("Block %d: ", i + 1);
             scanf("%d", &b[i]);
-            b_no[i] = i;
         }
 
         // Get process sizes
-        printf("Enter the size of the Processes (KB) :-\n");
-
-        for (i = 1; i <= np; i++) {
-            printf("Process %d: ", i);
+        printf("Enter the size of the processes:\n");
+        for (i = 0; i < np; i++) {
+            printf("Process %d: ", i + 1);
             scanf("%d", &p[i]);
         }
 
-        // Display header
-        printf("\n\nProcess_No\tProcess_Size\tBlock_No\tBlock_Size\tFragment\n");
+        // Output table header
+        printf("\n\nProcess_No\tProcess_Size(KB)\tBlock_No\tBlock_Size(KB)\tFragment(KB)\n");
 
         // Next fit memory allocation logic
-        for (i = 1; i <= np; i++) {
-            flag = 0; // Reset flag to indicate if the process was allocated
-            int checked_blocks = 0; // Tracks how many blocks have been checked
+        for (i = 0; i < np; i++) {
+            int allocated = 0; //Tracks if the current process is allocated
+            int blocks_checked = 0; //Ensures all blocks are checked without infinite looping
+            j = last_allocated_block; //Starts searching for a block from where the last allocation
 
-            // Start searching from the last allocated block
-            j = last_allocated_block + 1;
-            while (checked_blocks < nb) {
-                if (j > nb) {
-                    j = 1; // Wrap around to the first block
-                }
+            // Allocates the process to the block.
+            while (blocks_checked < nb) {
                 if (p[i] <= b[j]) {
-                    // Allocate the block to the process
-                    flagn[j] = 1;
-                    printf("%-15d\t%-15d\t%-15d\t%-15d\t", i, p[i], b_no[j], b[j]);
-                    b[j] = b[j] - p[i];
-                    fragi = fragi + b[j];
-                    printf("%-15d\n", b[j]);
-                    last_allocated_block = j; // Update the last allocated block
-                    flag = 1; // Mark the process as allocated
+                    printf("%-15d\t%-16d\t%-15d\t%-15d\t%-d\n",
+                           i + 1, p[i], j + 1, b[j], b[j] - p[i]);
+                    b[j] -= p[i]; // Updates the block size after allocation
+                    last_allocated_block = j; //Updates last_allocated_block to the current block index
+                    allocated = 1;
                     break;
                 }
-                j++;
-                checked_blocks++;
+                j = (j + 1) % nb; //Moves to the next block
+                blocks_checked++;
             }
 
             // If no block could accommodate the process
-            if (flag == 0) {
-                printf("%-15d\t%-15d\t%-15s\t%-15s\t%-15s\n", i, p[i], "Can not", "allocate", "process");
+            if (!allocated) {
+                printf("%-15d\t%-16d\t Can not be allocated...\n", i + 1, p[i]);
             }
         }
 
-        // Calculate internal and external fragmentation
-        printf("Internal Fragmentation = %d", fragi);
-        for (j = 1; j <= nb; j++) {
-            if (flagn[j] != 1)
-                fragx = fragx + b[j];
-        }
-        printf("\nExternal Fragmentation = %d\n", fragx);
-
-        // Ask the user if they want to restart the program
         printf("\nDo you want to restart the program? (y/n): ");
         scanf(" %c", &choice);
 
     } while (choice == 'y' || choice == 'Y');
 
-    printf("\nProgram terminated. Goodbye!\n");
+    printf("\nProgram terminated.\n");
 }

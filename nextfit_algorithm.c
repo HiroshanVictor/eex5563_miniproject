@@ -18,8 +18,8 @@ void main() {
     do {
         int nb, np, b[max_size], p[max_size], i, j, last_allocated_block = 0;
 
-        printf("\n\tRegister No: 421420945\n");
-        printf("\n\tMemory Management Scheme - Next Fit\n");
+        printf("\t\tRegister No: 421420945");
+        printf("\n\t\tMemory Management Scheme - Next Fit\n");
 
         // Get number of blocks with validation
         do {
@@ -47,7 +47,7 @@ void main() {
         }
 
         // Get process sizes
-        printf("Enter the size of the processes:\n");
+        printf("\nEnter the size of the processes:\n");
         for (i = 0; i < np; i++) {
             printf("Process %d: ", i + 1);
             scanf("%d", &p[i]);

@@ -68,7 +68,7 @@ void main() {
                     printf("%-15d\t%-16d\t%-15d\t%-15d\t%-d\n",
                            i + 1, p[i], j + 1, b[j], b[j] - p[i]);
                     b[j] -= p[i]; // Updates the block size after allocation
-                    last_allocated_block = j; //Updates last_allocated_block to the current block index
+                    last_allocated_block = (j + 1) % nb; // Moves to the next block for subsequent allocations
                     allocated = 1;
                     break;
                 }

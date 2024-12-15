@@ -47,7 +47,7 @@ void main() {
         }
 
         // Get process sizes
-        printf("\nEnter the size of the processes:\n");
+        printf("\nEnter the size of the processes(KB):\n");
         for (i = 0; i < np; i++) {
             printf("Process %d: ", i + 1);
             scanf("%d", &p[i]);
